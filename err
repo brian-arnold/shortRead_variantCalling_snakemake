@@ -1,0 +1,35 @@
+/var/spool/slurmd/job33540532/slurm_script: line 12: activate: No such file or directory
+/scratch/gpfs/bjarnold/AE/smk/Snakefile_bam2vcf_gatk:10: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10000
+Job counts:
+	count	jobs
+	1	all
+	1	vcftools
+	2
+Select jobs to execute...
+
+[Mon Feb 22 13:38:42 2021]
+rule vcftools:
+    input: gatk/Combined_hardFiltered.vcf, intervalFiles/intervals_fb.bed
+    output: gatk/missing_data_per_ind.txt, gatk/SNP_per_interval.txt
+    jobid: 1
+    resources: mem_mb=30000
+
+Submitted job 1 with external jobid '33540539'.
+[Mon Feb 22 15:22:59 2021]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Mon Feb 22 15:22:59 2021]
+localrule all:
+    input: gatk/missing_data_per_ind.txt, gatk/SNP_per_interval.txt
+    jobid: 0
+
+[Mon Feb 22 15:22:59 2021]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /scratch/gpfs/bjarnold/AE/smk/.snakemake/log/2021-02-22T133810.245562.snakemake.log

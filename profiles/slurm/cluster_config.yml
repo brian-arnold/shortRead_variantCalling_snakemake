@@ -1,0 +1,44 @@
+__default__:
+    time: "71:00:00"
+    nodes: 1
+    output: "logs/slurm-%j.out"
+    #error: "logs/slurm-%j.err"
+
+
+###
+# bam2vcf_gatk
+###
+
+#bam2gvcf: 
+#    partition: "serial_requeue"
+bam2gvcf: 
+    mem: 30000
+    time: "23:59:59"
+mkDBmapfile:
+    mem: 10000
+    time: "23:59:59"
+# gatk GenomicsDBImport
+gvcf2DB:
+    mem: 30000
+    time: "71:59:00"
+# gatk GenotypeGVCFs 
+DB2vcf: 
+    mem: 30000
+    time: "71:59:00"
+# gatk GatherVcfs
+gatherVcfs:
+    mem: 30000
+    time: "71:59:00"
+# vcftools program
+vcftools:
+    mem: 150000
+    time: "71:59:00"
+
+
+###
+# bam2vcf_fb
+###
+
+#bam2vcf: 
+#    partition: "serial_requeue"
+    #mem: 5000 # MEMORY IS SPECIFIED WITHIN RULE, TO INCREASE WITH ATTEMPTS

@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	1	vcftools
+	2
+
+[Mon Feb 22 13:37:36 2021]
+rule vcftools:
+    input: gatk/Combined_hardFiltered.vcf, intervalFiles/intervals_fb.bed
+    output: gatk/missing_data_per_ind.txt, gatk/SNP_per_interval.txt
+    jobid: 1
+    resources: mem_mb=30000
+
+
+[Mon Feb 22 13:37:36 2021]
+localrule all:
+    input: gatk/missing_data_per_ind.txt, gatk/SNP_per_interval.txt
+    jobid: 0
+
+Job counts:
+	count	jobs
+	1	all
+	1	vcftools
+	2
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
