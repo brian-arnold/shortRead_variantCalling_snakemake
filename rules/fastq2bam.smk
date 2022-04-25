@@ -80,14 +80,17 @@ rule dedup:
         bamDir + "{sample}_sorted.bai"
     output:
         dedupBam = bamDir + "{sample}_dedup.bam",
+        dedupBai = bamDir + "{sample}_dedup.bai",
         dedupMet = sumstatDir + "{sample}_dedupMetrics.txt",
     conda:
         "../envs/fastq2bam.yml"
     resources:
         mem_mb = lambda wildcards, attempt: attempt * res_config['dedup']['mem'] 
+    params:
+        picard_out = bamDir + "{sample}_dedup.bai" # to use wildcards in 'run' statement below, specify them here
     shell:
         "picard MarkDuplicates I={input[0]} O={output.dedupBam} METRICS_FILE={output.dedupMet} REMOVE_DUPLICATES=false TAGGING_POLICY=All\n"
-        "picard BuildBamIndex I={output.dedupBam} "
+        "picard BuildBamIndex I={output.dedupBam} O={params.picard_out}"
 
 rule bam_sumstats:
     input: 

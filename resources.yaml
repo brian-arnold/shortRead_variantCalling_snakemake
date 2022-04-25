@@ -4,14 +4,14 @@
 
 # fastp program
 fastp: 
-    threads: 10 
+    threads: 1
     mem: 5000
 # index reference
 index_ref:
     mem: 10000
 # bwa mapping
 bwa_map: 
-    threads: 20 
+    threads: 1
     mem: 15000
 # sort bam with picard's SortSam tool
 sort_bam: 

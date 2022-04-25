@@ -3,7 +3,7 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - fastp==0.20.1
+  - fastp==0.23.2
   - bwa==0.7.17
-  - picard==2.22.8
-  - samtools==1.10
+  - picard==2.27.1
+  - samtools==1.15
