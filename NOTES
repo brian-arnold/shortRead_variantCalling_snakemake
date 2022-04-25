@@ -1,5 +1,6 @@
 need to install conda environments before running, e.g.:
-snakemake --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
+snakemake -n --use-conda --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
+snakemake --use-conda --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
 
 specify time as string in profiles/slurm/cluster_config.yml , e.g.:
 "71:00:00"

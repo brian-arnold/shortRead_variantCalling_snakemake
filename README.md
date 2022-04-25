@@ -1,5 +1,15 @@
 # Automated short-read mapping and variant calling
 
+TO ADD:
+
+specify time as string in profiles/slurm/cluster_config.yml , e.g.:
+"71:00:00"
+
+Give BWA 20 threads instead of default 10.
+
+If you want to modify time limit, which determines the queue/partition on Della, put these values in ./profiles/slurm/cluster_config.yml.
+Put still put memory values in resources.yml in root dir, since these get loaded in and used in rules.
+
 ## Design
 
 This is a suite of snakemake pipelines to call variants with short-read sequence data. These pipelines are split into two modular parts, named by the primary type of input/output files: 
@@ -43,7 +53,14 @@ The `resources.yaml` file may be changed to increase the amount of requested mem
 ### 4.) Are you alright with default number of jobs to submit to run simultaneously?
 There's a file in the `profiles/slurm` directory called `config.yaml` which contains various options for the workflow (this setup is from using [profiles](https://github.com/Snakemake-Profiles)). The most important is `jobs` at the top. If your workflow needs to submit ~10k jobs overall and many of them can be run in parallel (e.g. making GVCFs from BAM files for each sample), then this `jobs` variable determines how many jobs the workflow will submit at any given time. The default is 1000, meaning if 1k jobs are sitting in the queue (running or pending), it will not submit more. If you are concerned about your fairshare score decreasing dramatically because of this (e.g. you have 80k jobs to submit overall from having many samples), set `jobs` to something smaller, such as 300. This will of course make the workflow take longer but will leave resources for your colleagues!
 
-### 5.) Submit workflow(s)!
+### 5a.) Submit workflow(s)!
+If your compute nodes don't have access to the internet, you must configure the conda environments before submitting the workflow as a job (which will get put on a copute node with no internet and thus no access to conda). For each part of the pipeline, pre-install the conda environments with a command like this:
+
+```
+snakemake --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
+```
+
+### 5b.) Submit workflow(s)!
 After updating the config.yaml file, you may now run one of the workflows, which gets submitted as a job that itself submits many jobs (max of 1000, may be changed).
 
 #### fastq -> BAM workflow
