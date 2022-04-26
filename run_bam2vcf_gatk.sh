@@ -10,5 +10,7 @@
 
 source /home/bjarnold/miniconda3/etc/profile.d/conda.sh
 source activate snakemake
-snakemake --snakefile Snakefile_bam2vcf_gatk --profile ./profiles/slurm
+snakemake --snakefile Snakefile_bam2vcf_gatk \
+--profile ./profiles/slurm \
+--conda-prefix /home/bjarnold/miniconda3/envs
 

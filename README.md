@@ -57,8 +57,11 @@ There's a file in the `profiles/slurm` directory called `config.yaml` which cont
 If your compute nodes don't have access to the internet, you must configure the conda environments before submitting the workflow as a job (which will get put on a copute node with no internet and thus no access to conda). For each part of the pipeline, pre-install the conda environments with a command like this:
 
 ```
-snakemake --use-conda --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
+snakemake --use-conda --conda-prefix /home/bjarnold/miniconda3/envs --snakefile Snakefile_fastq2bam --profile ./profiles/slurm --conda-create-envs-only
+snakemake --use-conda --conda-prefix /home/bjarnold/miniconda3/envs --snakefile Snakefile_bam2vcf_gatk --profile ./profiles/slurm --conda-create-envs-only
 ```
+Please specify a personal directory for `--conda-prefix`, which I found necessary to use otherwise an 'PaddingError' error would occasionally occur. 
+
 
 ### 5b.) Submit workflow(s)!
 After updating the config.yaml file, you may now run one of the workflows, which gets submitted as a job that itself submits many jobs (max of 1000, may be changed).

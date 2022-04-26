@@ -10,7 +10,9 @@
 
 
 source activate snakemake
-snakemake --snakefile Snakefile_intervals --profile ./profiles/slurm
+snakemake --snakefile Snakefile_intervals \
+--profile ./profiles/slurm \
+--conda-prefix /home/bjarnold/miniconda3/envs
 
-snakemake --snakefile Snakefile_bam2vcf_gatk --profile ./profiles/slurm --dryrun > bam2vcf_gatk_dryrun.txt
-snakemake --snakefile Snakefile_bam2vcf_fb --profile ./profiles/slurm --dryrun > bam2vcf_fb_dryrun.txt
+snakemake --snakefile Snakefile_bam2vcf_gatk --profile ./profiles/slurm --dryrun --conda-prefix /home/bjarnold/miniconda3/envs > bam2vcf_gatk_dryrun.txt
+snakemake --snakefile Snakefile_bam2vcf_fb --profile ./profiles/slurm --dryrun --conda-prefix /home/bjarnold/miniconda3/envs > bam2vcf_fb_dryrun.txt

@@ -11,4 +11,6 @@
 
 source /home/bjarnold/miniconda3/etc/profile.d/conda.sh
 conda activate snakemake
-snakemake --snakefile Snakefile_fastq2bam --profile ./profiles/slurm
+snakemake --snakefile Snakefile_fastq2bam \
+--profile ./profiles/slurm \
+--conda-prefix /home/bjarnold/miniconda3/envs

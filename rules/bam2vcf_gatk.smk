@@ -143,15 +143,16 @@ rule gatherVcfs:
 
 rule vcftools:
     input:
-        vcf = gatkDir + "Combined_hardFiltered.vcf",
-        int = intDir + "intervals_fb.bed"
+        vcf = gatkDir + "Combined_hardFiltered.vcf"
     output: 
         missing = gatkDir + "missing_data_per_ind.txt",
         SNPsPerInt = gatkDir + "SNP_per_interval.txt"
     conda:
         "../envs/bam2vcf.yml"
+    params:
+        int = intDir + "intervals_fb.bed"
     resources:
         mem_mb = lambda wildcards, attempt: attempt * res_config['vcftools']['mem']    # this is the overall memory requested
     shell:
         "vcftools --vcf {input.vcf} --remove-filtered-all --minDP 1 --stdout --missing-indv > {output.missing}\n"
-        "bedtools intersect -a {input.int} -b {input.vcf} -c > {output.SNPsPerInt}"
+        "bedtools intersect -a {params.int} -b {input.vcf} -c > {output.SNPsPerInt}"
