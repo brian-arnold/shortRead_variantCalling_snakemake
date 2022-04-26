@@ -6,7 +6,7 @@ from collections import defaultdict
 import helperFun
 
 configfile: "config.yaml"
-res_config = yaml.safe_load(open("resources.yaml"))
+res_config = yaml.safe_load(open("./profiles/slurm/cluster_config.yml"))
 
 # rename variables from config file for clarity downstream
 fastq_suffix1 = config["fastq_suffix1"]

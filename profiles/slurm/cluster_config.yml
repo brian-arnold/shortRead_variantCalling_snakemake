@@ -6,8 +6,43 @@ __default__:
 
 
 ###
+# fastq -> BAM workflow
+##
+
+# fastp program
+fastp: 
+    threads: 1
+    mem: 5000
+    time: "23:59:59"
+# index reference
+index_ref:
+    mem: 10000
+    time: "23:59:59"
+# bwa mapping
+bwa_map: 
+    threads: 1
+    mem: 15000
+    time: "71:59:00"
+# sort bam with picard's SortSam tool
+sort_bam: 
+    mem: 25000
+    time: "23:59:59"
+# mark duplicates with picard's MarkDuplicates
+dedup: 
+    mem: 9000
+    time: "23:59:59"
+# calculate BAM summaries with samtools and picard
+bam_sumstats: 
+    mem: 9000
+    time: "23:59:59"
+
+
+###
 # bam2vcf_gatk
 ###
+
+process_ref:
+    mem: 15000
 
 #bam2gvcf: 
 #    partition: "serial_requeue"
@@ -31,13 +66,20 @@ gatherVcfs:
     time: "71:59:00"
 # vcftools program
 vcftools:
-    mem: 150000
+    mem: 80000
     time: "71:59:00"
 
 
 ###
 # bam2vcf_fb
 ###
+# freebayes workflow
+
+# freebayes program
+bam2vcf:
+    mem: 30000
+    time: "71:59:00"
+
 
 #bam2vcf: 
 #    partition: "serial_requeue"

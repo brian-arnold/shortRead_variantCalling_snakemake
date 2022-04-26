@@ -1,15 +1,5 @@
 # Automated short-read mapping and variant calling
 
-TO ADD:
-
-specify time as string in profiles/slurm/cluster_config.yml , e.g.:
-"71:00:00"
-
-Give BWA 20 threads instead of default 10.
-
-If you want to modify time limit, which determines the queue/partition on Della, put these values in ./profiles/slurm/cluster_config.yml.
-Put still put memory values in resources.yml in root dir, since these get loaded in and used in rules.
-
 ## Design
 
 This is a suite of snakemake pipelines to call variants with short-read sequence data. These pipelines are split into two modular parts, named by the primary type of input/output files: 
@@ -29,7 +19,7 @@ Please follow the [installation via conda instructions](https://snakemake.readth
 ### 1.) Download code
 First clone this repository and move into the new directory: 
 ```
-git clone https://github.com/harvardinformatics/shortRead_mapping_variantCalling
+git clone https://github.com/brian-arnold/shortRead_variantCalling_snakemake
 cd shortRead_mapping_variantCalling
 ```
 
@@ -48,7 +38,10 @@ Witin this directory a file named `config.yaml` stores many variables, including
 If you specify a minNmer value that does not sufficiently break up the genome -- creating intervals larger than maxIntervalLen -- the workflow will halt and show you the maximum interval length it found for various Nmers in the genome. With these data you can adjust the parameters accordingly. For more info, see the interval creation workflow below.
 
 ### 3.) Set the resources to request for various steps
-The `resources.yaml` file may be changed to increase the amount of requested memory (in Megabytes) or the number of threads for the steps that support multi-threading. Not all steps in the workflows are included here, so these use the default amount of resources. **NOTE**: if any job fails, it gets resubmitted with increased memory calculated as (*attempt number*)\*(initial memory).
+If you want to modify time limit, which determines the queue/partition on Della, put these values in ./profiles/slurm/cluster_config.yml.
+The `./profiles/slurm/cluster_config.yml` file may be changed to increase the amount of requested memory (in Megabytes) or the number of threads for the steps that support multi-threading. Not all steps in the workflows are included here, so these use the default amount of resources. **NOTE**: if any job fails, it gets resubmitted with increased memory calculated as (*attempt number*)\*(initial memory).
+
+If you want to modify time limit, which determines the queue/partition on Della, put these values in ./profiles/slurm/cluster_config.yml as strings, e.g. "71:00:00".
 
 ### 4.) Are you alright with default number of jobs to submit to run simultaneously?
 There's a file in the `profiles/slurm` directory called `config.yaml` which contains various options for the workflow (this setup is from using [profiles](https://github.com/Snakemake-Profiles)). The most important is `jobs` at the top. If your workflow needs to submit ~10k jobs overall and many of them can be run in parallel (e.g. making GVCFs from BAM files for each sample), then this `jobs` variable determines how many jobs the workflow will submit at any given time. The default is 1000, meaning if 1k jobs are sitting in the queue (running or pending), it will not submit more. If you are concerned about your fairshare score decreasing dramatically because of this (e.g. you have 80k jobs to submit overall from having many samples), set `jobs` to something smaller, such as 300. This will of course make the workflow take longer but will leave resources for your colleagues!
