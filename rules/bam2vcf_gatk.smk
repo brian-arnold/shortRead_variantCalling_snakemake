@@ -155,4 +155,4 @@ rule vcftools:
         mem_mb = lambda wildcards, attempt: attempt * res_config['vcftools']['mem']    # this is the overall memory requested
     shell:
         "vcftools --vcf {input.vcf} --remove-filtered-all --minDP 1 --stdout --missing-indv > {output.missing}\n"
-        "bedtools intersect -a {params.int} -b {input.vcf} -c > {output.SNPsPerInt}"
+        "bedtools intersect -sorted -a {params.int} -b {input.vcf} -c > {output.SNPsPerInt}"
